@@ -79,6 +79,9 @@ metadata:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: kong
     kubernetes.io/tls-acme: "true"
+  labels:
+    category: {{category}}
+    challenge: {{name}}
 spec:
   backend:
     serviceName: {{name}}
