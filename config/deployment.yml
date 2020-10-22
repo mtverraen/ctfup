@@ -70,4 +70,29 @@ spec:
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
     {{/each}}
+---
+apiVersion: extensions/v1beta1
+kind: {{ingressType}}
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    kubernetes.io/ingress.class: kong
+    kubernetes.io/tls-acme: "true"
+  spec:
+  backend:
+    serviceName: {{name}}
+    servicePort: {{containerPort}}
+  rules:
+  - host: {{challengeHostName}}
+    http:
+      paths:
+      - backend:
+          serviceName: {{name}}
+          servicePort: {{containerPort}}
+        path: /*
+  tls:
+  - hosts:
+    - '*.blueteam.no'
+    secretName: ctf-blueteam-tls
 {{/if}}
