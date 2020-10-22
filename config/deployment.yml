@@ -83,17 +83,16 @@ metadata:
     category: {{category}}
     challenge: {{name}}
 spec:
-  backend:
-    serviceName: {{name}}
-    servicePort: {{expose.containerPort}}
   rules:
   - host: {{challengeHostName}}
     http:
       paths:
+      {{#each expose}}
       - backend:
           serviceName: {{name}}
-          servicePort: {{expose.containerPort}}
+          servicePort: {{containerPort}}
         path: /*
+      {{/each}}
   tls:
   - hosts:
     - '*.blueteam.no'
