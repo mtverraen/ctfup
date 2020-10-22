@@ -79,7 +79,7 @@ metadata:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: kong
     kubernetes.io/tls-acme: "true"
-  spec:
+spec:
   backend:
     serviceName: {{name}}
     servicePort: {{containerPort}}
