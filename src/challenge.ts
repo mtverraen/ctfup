@@ -23,8 +23,6 @@ interface Conf {
     expose?: PortMapping[];
     containers?: { [name: string]: Container };
     replicas?: number;
-    ingressType?: string;
-    challengeHostName?:string;
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';

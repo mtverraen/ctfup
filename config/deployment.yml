@@ -72,7 +72,7 @@ spec:
     {{/each}}
 ---
 apiVersion: extensions/v1beta1
-kind: {{ingressType}}
+kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
@@ -85,14 +85,14 @@ metadata:
 spec:
   backend:
     serviceName: {{name}}
-    servicePort: {{containerPort}}
+    servicePort: {{expose.containerPort}}
   rules:
   - host: {{challengeHostName}}
     http:
       paths:
       - backend:
           serviceName: {{name}}
-          servicePort: {{containerPort}}
+          servicePort: {{expose.containerPort}}
         path: /*
   tls:
   - hosts:
