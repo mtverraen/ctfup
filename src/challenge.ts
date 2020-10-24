@@ -26,6 +26,7 @@ interface Conf {
     ingressType?: string;
     challengeHostName?: string;
     servicePort?:string;
+    apiVersion?:string
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';

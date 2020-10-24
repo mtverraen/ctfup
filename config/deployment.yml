@@ -71,7 +71,7 @@ spec:
       nodePort: {{nodePort}}
     {{/each}}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: {{apiVersion}}
 kind: {{ingressType}}
 metadata:
   name: {{name}}-ingress
