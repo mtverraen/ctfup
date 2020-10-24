@@ -88,12 +88,12 @@ spec:
   - host: {{challengeHostName}}
     http:
       paths:
+      {{#each expose}}
       - path: "/*"
         backend:
           serviceName: {{name}}
-          {{#each expose}}
           servicePort: {{containerPort}}
-          {{/each}}
+      {{/each}}
   tls:
   - hosts:
     - '*.heltsikker.no'
