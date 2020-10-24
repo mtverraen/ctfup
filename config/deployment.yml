@@ -69,12 +69,9 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
-    {{/each}}
-    
-{{#each expose}}
 ---
 apiVersion: extensions/v1beta1
-kind: {{ingressType}}
+kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
