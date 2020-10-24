@@ -25,6 +25,7 @@ interface Conf {
     replicas?: number;
     ingressType?: string;
     challengeHostName?: string;
+    servicePort?:string;
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';
