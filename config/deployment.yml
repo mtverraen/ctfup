@@ -73,12 +73,12 @@ spec:
 ---
 {{#each expose}}
 apiVersion: extensions/v1beta1
-kind: Ingress
+kind: {{ingressType}}
 metadata:
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/cluster-issuer: "letsencrypt"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-    kubernetes.io/ingress.class: kong
+    kubernetes.io/ingress.class: "kong"
     kubernetes.io/tls-acme: "true"
   labels:
     category: {{category}}
