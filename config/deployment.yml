@@ -91,7 +91,9 @@ spec:
       - path: "/*"
         backend:
           serviceName: {{name}}
+          {{#each}}
           servicePort: {{containerPort}}
+          {{/each}}
   tls:
   - hosts:
     - '*.heltsikker.no'
