@@ -70,6 +70,7 @@ spec:
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
     {{/each}}
+    
 {{#each expose}}
 ---
 apiVersion: extensions/v1beta1
