@@ -95,7 +95,7 @@ spec:
         path: /*
   tls:
   - hosts:
-    - '*.blueteam.no'
+    - '*.heltsikker.no'
     secretName: ctf-blueteam-tls
 {{/each}}
 {{/if}}
