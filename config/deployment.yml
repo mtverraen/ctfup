@@ -59,7 +59,7 @@ metadata:
     category: {{category}}
     challenge: {{name}}
 spec:
-  type: Loadbalancer
+  type: NodePort
   selector:
     category: {{category}}
     challenge: {{name}}
@@ -69,8 +69,9 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
+---
 apiVersion: extensions/v1beta1
-kind: Ingress
+kind: {{ingressType}}
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
