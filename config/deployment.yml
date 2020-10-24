@@ -86,6 +86,7 @@ metadata:
 spec:
   rules:
   - host: {{challengeHostName}}
+    port: {{servicePort}}
     http:
       paths:
       - path: "/*"
