@@ -64,15 +64,17 @@ spec:
     category: {{category}}
     challenge: {{name}}
   ports:
-{{#each expose}}
+    {{#each expose}}
     - port: {{containerPort}}
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
+    {{/each}}
 ---
 apiVersion: extensions/v1beta1
 kind: {{ingressType}}
 metadata:
+  name: {{name}}-ingress
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
@@ -89,10 +91,10 @@ spec:
       - path: /*
         backend:
           serviceName: {{name}}
-          servicePort: {{containerPort}}
+          servicePort: {{expose.containerPort}}
   tls:
   - hosts:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
-{{/each}}
+
 {{/if}}
