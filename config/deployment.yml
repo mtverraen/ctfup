@@ -71,6 +71,7 @@ spec:
       nodePort: {{nodePort}}
     {{/each}}
 ---
+{{#each expose}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -87,14 +88,14 @@ spec:
   - host: {{challengeHostName}}
     http:
       paths:
-      {{#each expose}}
+      
       - backend:
           serviceName: {{name}}
           servicePort: {{containerPort}}
         path: /*
-      {{/each}}
   tls:
   - hosts:
     - '*.blueteam.no'
     secretName: ctf-blueteam-tls
+{{/each}}
 {{/if}}
