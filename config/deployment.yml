@@ -64,12 +64,11 @@ spec:
     category: {{category}}
     challenge: {{name}}
   ports:
-    {{#each expose}}
+{{#each expose}}
     - port: {{containerPort}}
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
----
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
