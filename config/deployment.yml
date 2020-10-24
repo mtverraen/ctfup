@@ -70,8 +70,8 @@ spec:
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
     {{/each}}
----
 {{#each expose}}
+---
 apiVersion: extensions/v1beta1
 kind: {{ingressType}}
 metadata:
@@ -96,6 +96,6 @@ spec:
   tls:
   - hosts:
     - '*.heltsikker.no'
-    secretName: ctf-blueteam-tls
+    secretName: ctf-heltsikker-tls
 {{/each}}
 {{/if}}
