@@ -88,10 +88,9 @@ spec:
   - host: {{challengeHostName}}
     http:
       paths:
-      
       - backend:
-          serviceName: {{name}}
-          servicePort: {{containerPort}}
+        serviceName: {{name}}
+        servicePort: {{containerPort}}
         path: /*
   tls:
   - hosts:
