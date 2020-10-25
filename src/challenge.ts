@@ -23,10 +23,11 @@ interface Conf {
     expose?: PortMapping[];
     containers?: { [name: string]: Container };
     replicas?: number;
-    ingressType?: string;
-    challengeHostName?: string;
-    servicePort?:string;
-    apiVersion?:string
+    host?: string;
+    challengePort?:string;
+    TCPIngress?:string;
+    Ingress?:string
+
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';

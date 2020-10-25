@@ -97,7 +97,6 @@ spec:
   - hosts:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
----
 {{/if}}
 {{#if TCPIngress}}
 ---
