@@ -96,3 +96,27 @@ spec:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
 {{/if}}
+{{if exposeTCP}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{name}}
+  labels:
+    category: {{category}}
+    challenge: {{name}}
+spec:
+  type: LoadBalancer
+  sessionAffinity: ClientIP
+  selector:
+    category: {{category}}
+    challenge: {{name}}
+  annotations: 
+    external-dns.alpha.kubernetes.io/hostname: {{host}}
+  ports:
+    {{#each exposeTCP}}
+    - port: {{containerPort}}
+      name: port-{{containerPort}}
+      targetPort: {{containerPort}}
+    {{/each}}
+{{/if}}
