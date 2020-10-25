@@ -26,7 +26,6 @@ interface Conf {
     containers?: { [name: string]: Container };
     replicas?: number;
     host?: string;
-    challengePort?:string;
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';

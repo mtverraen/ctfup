@@ -91,7 +91,7 @@ spec:
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{challengePort}}
+          servicePort: {{containerPort}}
       {{/each}}
   tls:
   - hosts:
