@@ -21,13 +21,12 @@ interface Conf {
     name: string;
     category: string;
     expose?: PortMapping[];
+    exposeHttp?: PortMapping[];
+    exposeTCP?: PortMapping[];
     containers?: { [name: string]: Container };
     replicas?: number;
     host?: string;
     challengePort?:string;
-    TCPIngress?:string;
-    Ingress?:string
-
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';

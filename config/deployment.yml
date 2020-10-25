@@ -49,7 +49,7 @@ spec:
       {{/each}}
   {{/if}}
 
-{{#if expose}}
+{{if exposeHttp}}
 ---
 apiVersion: v1
 kind: Service
@@ -64,13 +64,11 @@ spec:
     category: {{category}}
     challenge: {{name}}
   ports:
-    {{#each expose}}
+    {{#each exposeHttp}}
     - port: {{containerPort}}
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
-      nodePort: {{nodePort}}
     {{/each}}
-{{#if Ingress}}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -97,27 +95,4 @@ spec:
   - hosts:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
-{{/if}}
-{{#if TCPIngress}}
----
-apiVersion: configuration.konghq.com/v1beta1
-kind: TCPIngress
-metadata:
-  name: {{name}}-ingress
-  annotations:
-    kubernetes.io/ingress.class: "kong"
-  labels:
-    category: {{category}}
-    challenge: {{name}}
-spec:
-  rules:
-  - host: {{host}}
-    port: {{challengePort}}
-    http:
-      paths:
-      - path: "/*"
-        backend:
-          serviceName: {{name}}
-          servicePort: {{challengePort}}
-{{/if}}
 {{/if}}
