@@ -71,9 +71,9 @@ spec:
       nodePort: {{nodePort}}
     {{/each}}
 {{#if Ingress}}
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
-kind: {{ingressType}}
 metadata:
   name: {{name}}-ingress
   annotations:
@@ -92,7 +92,7 @@ spec:
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{servicePort}}
+          servicePort: {{challengePort}}
   tls:
   - hosts:
     - '*.heltsikker.no'
