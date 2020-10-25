@@ -69,7 +69,7 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
     {{/each}}
-    
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -88,12 +88,10 @@ spec:
   - host: {{host}}
     http:
       paths:
-      {{#each exposeHttp}}
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{containerPort}}
-      {/each}
+          servicePort: {{ServicePort}}
   tls:
   - hosts:
     - '*.heltsikker.no'

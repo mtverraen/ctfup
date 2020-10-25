@@ -26,6 +26,7 @@ interface Conf {
     containers?: { [name: string]: Container };
     replicas?: number;
     host?: string;
+    ServicePort?:PortMapping;
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';
@@ -41,6 +42,9 @@ export class Challenge {
         this.dir = dir;
         this.conf = conf;
         this.type = type;
+        if (conf.exposeHttp){
+            conf.ServicePort=conf.exposeHttp[0]
+        }
     }
 
     static async parse(dir: string) {
