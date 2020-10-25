@@ -105,10 +105,7 @@ kind: TCPIngress
 metadata:
   name: {{name}}-ingress
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt"
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: "kong"
-    kubernetes.io/tls-acme: "true"
   labels:
     category: {{category}}
     challenge: {{name}}
@@ -122,9 +119,5 @@ spec:
         backend:
           serviceName: {{name}}
           servicePort: {{challengePort}}
-  tls:
-  - hosts:
-    - '*.heltsikker.no'
-    secretName: ctf-heltsikker-tls
 {{/if}}
 {{/if}}
