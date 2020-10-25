@@ -70,8 +70,9 @@ spec:
       targetPort: {{containerPort}}
       nodePort: {{nodePort}}
     {{/each}}
----
-apiVersion: {{apiVersion}}
+{{#if Ingress}}
+apiVersion: extensions/v1beta1
+kind: Ingress
 kind: {{ingressType}}
 metadata:
   name: {{name}}-ingress
@@ -85,8 +86,7 @@ metadata:
     challenge: {{name}}
 spec:
   rules:
-  - host: {{challengeHostName}}
-    port: {{servicePort}}
+  - host: {{host}}
     http:
       paths:
       - path: "/*"
@@ -97,4 +97,35 @@ spec:
   - hosts:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
+---
+{{/if}}
+{{#if TCPIngress}}
+---
+apiVersion: configuration.konghq.com/v1beta1
+kind: TCPIngress
+metadata:
+  name: {{name}}-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    kubernetes.io/ingress.class: "kong"
+    kubernetes.io/tls-acme: "true"
+  labels:
+    category: {{category}}
+    challenge: {{name}}
+spec:
+  rules:
+  - host: {{host}}
+    port: {{challengePort}}
+    http:
+      paths:
+      - path: "/*"
+        backend:
+          serviceName: {{name}}
+          servicePort: {{challengePort}}
+  tls:
+  - hosts:
+    - '*.heltsikker.no'
+    secretName: ctf-heltsikker-tls
+{{/if}}
 {{/if}}
