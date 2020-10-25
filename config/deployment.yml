@@ -95,6 +95,7 @@ spec:
   tls:
   - hosts:
     - '*.heltsikker.no'
+    - '*.ctf.heltsikker.no'
     secretName: ctf-heltsikker-tls
 {{/if}}
 
