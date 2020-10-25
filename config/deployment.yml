@@ -96,7 +96,7 @@ spec:
   - hosts:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
-{/else}
+{/each}
 {{/if}}
 
 {{#if exposeTCP}}
