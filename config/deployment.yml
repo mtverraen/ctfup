@@ -49,7 +49,7 @@ spec:
       {{/each}}
   {{/if}}
 
-{{if exposeHttp}}
+{{#if exposeHttp}}
 ---
 apiVersion: v1
 kind: Service
@@ -96,7 +96,8 @@ spec:
     - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
 {{/if}}
-{{if exposeTCP}}
+
+{{#if exposeTCP}}
 ---
 apiVersion: v1
 kind: Service
