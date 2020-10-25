@@ -26,7 +26,7 @@ interface Conf {
     containers?: { [name: string]: Container };
     replicas?: number;
     host?: string;
-    ServicePort?:PortMapping;
+    ServicePort?:number;
 }
 
 type ChallengeType = 'hosted' | 'non-hosted';
@@ -43,7 +43,7 @@ export class Challenge {
         this.conf = conf;
         this.type = type;
         if (conf.exposeHttp){
-            conf.ServicePort=conf.exposeHttp[0]
+            conf.ServicePort=conf.exposeHttp[0].containerPort
         }
     }
 
