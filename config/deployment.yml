@@ -5,6 +5,7 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+    type: challenge
 spec:
   {{#if replicas }}
   replicas: {{replicas}}
@@ -48,6 +49,21 @@ spec:
         {{/if}}
       {{/each}}
   {{/if}}
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ServiceMonitor
+metadata:
+  name: challenge-{{name}}
+  labels:
+    type: challenge
+spec:
+  selector:
+    matchLabels:
+      type: challenge 
+  endpoints:
+    - port: 9342
+      interval: 10s
+      name: metrics
 
 {{#if exposeHttp}}
 ---
@@ -58,6 +74,7 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+    type: challenge 
 spec:
   type: NodePort
   selector:
@@ -83,6 +100,7 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+    type: challenge
 spec:
   rules:
   - host: {{host}}
@@ -95,7 +113,6 @@ spec:
   tls:
   - hosts:
     - '*.heltsikker.no'
-    - '*.ctf.heltsikker.no'
     secretName: ctf-heltsikker-tls
 {{/if}}
 
@@ -108,6 +125,7 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+    type: challenge 
 spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
