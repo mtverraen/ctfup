@@ -5,7 +5,6 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
-    type: challenge
 spec:
   {{#if replicas }}
   replicas: {{replicas}}
@@ -59,7 +58,6 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
-    type: challenge 
 spec:
   type: NodePort
   selector:
@@ -85,7 +83,6 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
-    type: challenge
 spec:
   rules:
   - host: {{host}}
@@ -110,7 +107,6 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
-    type: challenge 
 spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
