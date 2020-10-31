@@ -49,21 +49,6 @@ spec:
         {{/if}}
       {{/each}}
   {{/if}}
----
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ServiceMonitor
-metadata:
-  name: challenge-{{name}}
-  labels:
-    type: challenge
-spec:
-  selector:
-    matchLabels:
-      type: challenge 
-  endpoints:
-    - port: 9342
-      interval: 10s
-      name: metrics
 
 {{#if exposeHttp}}
 ---
@@ -141,3 +126,18 @@ spec:
       targetPort: {{containerPort}}
     {{/each}}
 {{/if}}
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ServiceMonitor
+metadata:
+  name: challenge-{{name}}
+  labels:
+    type: challenge
+spec:
+  selector:
+    matchLabels:
+      type: challenge 
+  endpoints:
+    - port: 9342
+      interval: 10s
+      name: metrics
