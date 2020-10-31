@@ -20,6 +20,7 @@ spec:
       labels:
         category: {{category}}
         challenge: {{name}}
+        type: challenge
     {{#if containers}}
     spec:
       containers:
