@@ -52,10 +52,11 @@ spec:
 ---
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ServiceMonitor
-name: {{name}}
-labels:
-  type: challenge
-  prometheus: kube-prometheus
+metadata:
+  name: {{name}}
+  labels:
+    type: challenge
+    prometheus: kube-prometheus
 spec:
   selector:
     matchLabels:
