@@ -76,8 +76,10 @@ kind: Ingress
 metadata:
   name: {{name}}-ingress
   annotations:
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: true
     kubernetes.io/ingress.class: "kong"
+    kong.kubernetes.io/ingress.allow-http: false 
+    kong.ingress.kubernetes.io/force-ssl-redirect: true 
   labels:
     category: {{category}}
     challenge: {{name}}
@@ -120,3 +122,19 @@ spec:
       targetPort: {{containerPort}}
     {{/each}}
 {{/if}}
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ServiceMonitor
+metadata:
+  name: challenge-{{name}}
+  labels:
+    type: challenge
+spec:
+  selector:
+    matchLabels:
+      category: {{category}}
+      challenge: {{name}} 
+  endpoints:
+    - port: 9342
+      interval: 10s
+      name: metrics
