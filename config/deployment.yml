@@ -20,7 +20,6 @@ spec:
       labels:
         category: {{category}}
         challenge: {{name}}
-        type: challenge
     {{#if containers}}
     spec:
       containers:
@@ -133,7 +132,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      type: challenge 
+      category: {{category}}
+      challenge: {{name}} 
   endpoints:
     - port: 9342
       interval: 10s
