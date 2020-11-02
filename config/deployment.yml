@@ -72,6 +72,7 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
     {{/each}}
+    
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
