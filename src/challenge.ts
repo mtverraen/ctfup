@@ -42,6 +42,7 @@ export class Challenge {
         this.dir = dir;
         this.conf = conf;
         this.type = type;
+        
         if (conf.exposeHttp){
             conf.ServicePort=conf.exposeHttp[0].containerPort
         }
