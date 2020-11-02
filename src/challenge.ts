@@ -46,6 +46,9 @@ export class Challenge {
         if (conf.exposeHttp){
             conf.ServicePort=conf.exposeHttp[0].containerPort
         }
+        else if (conf.exposeTCP){
+            conf.ServicePort=conf.exposeTCP[0].containerPort
+        }
     }
 
     static async parse(dir: string) {
