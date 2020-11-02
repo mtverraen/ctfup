@@ -47,7 +47,7 @@ spec:
         {{/each}}
         {{/if}}
       {{/each}}
-  {{/if}}
+    {{/if}}
 
 {{#if exposeHttp}}
 ---
@@ -57,7 +57,9 @@ metadata:
   name: {{name}}
   annotations: 
     prometheus.io/scrape: 'true'
-    prometheus.io/port: {{ServicePort}}
+    {{#each exposeHttp}}
+    prometheus.io/port: {{containerPort}}
+    {{/each}}
   labels:
     category: {{category}}
     challenge: {{name}}
@@ -72,7 +74,9 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
     {{/each}}
-    
+{{/if}}
+
+{{#if exposeHttp}}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -86,13 +90,15 @@ metadata:
     challenge: {{name}}
 spec:
   rules:
+  {{#each exposeHttp}}
   - host: {{host}}
     http:
       paths:
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{ServicePort}}
+          servicePort: {{containerPort}}
+  {{/each}}  
 {{/if}}
 
 {{#if exposeTCP}}
