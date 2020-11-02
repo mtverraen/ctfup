@@ -96,7 +96,7 @@ spec:
           servicePort: {{ServicePort}}
   tls:
   - hosts:
-    - '*.ctf.heltsikker.no'
+    - '*.heltsikker.no'
     secretName: ctf-heltsikker-tls
 {{/if}}
 
