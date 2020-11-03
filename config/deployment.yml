@@ -71,6 +71,31 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
     {{/each}}
+    
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{name}}-ingress
+  labels:
+    category: {{category}}
+    challenge: {{name}}
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: true
+    kubernetes.io/ingress.class: "kong"
+spec:
+  rules:
+  - host: {{host}}
+    http:
+      paths:
+      - path: "/*"
+        backend:
+          serviceName: {{name}}
+          servicePort: {{servicePort}}
+  tls:
+  - hosts:
+    - '*.heltsikker.no'
+    secretName: ctf-heltsikker-tls
 {{/if}}
 
 {{#if exposeTCP}}
