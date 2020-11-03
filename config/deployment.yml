@@ -5,6 +5,11 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+  annotations: 
+    prometheus.io/scrape: 'true'
+    {{#each exposeHttp}}
+    prometheus.io/port: {{containerPort}}
+    {{/each}}
 spec:
   {{#if replicas }}
   replicas: {{replicas}}
@@ -47,29 +52,76 @@ spec:
         {{/each}}
         {{/if}}
       {{/each}}
-    {{/if}}
-    
+  {{/if}}
+
+{{#if exposeHttp}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{name}}
+  labels:
+    category: {{category}}
+    challenge: {{name}}
+spec:
+  type: NodePort
+  selector:
+    category: {{category}}
+    challenge: {{name}}
+  ports:
+    {{#each exposeHttp}}
+    - port: {{containerPort}}
+      name: port-{{containerPort}}
+      targetPort: {{containerPort}}
+    {{/each}}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{name}}-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    kubernetes.io/ingress.class: "kong"
+    kubernetes.io/tls-acme: "true"
+  labels:
+    category: {{category}}
+    challenge: {{name}}
+spec:
+  rules:
+  - host: {{host}}
+    http:
+      paths:
+      - path: "/*"
+        backend:
+          serviceName: {{name}}
+          servicePort: {{ServicePort}}
+  tls:
+  - hosts:
+    - '*.heltsikker.no'
+    secretName: ctf-heltsikker-tls
+{{/if}}
+
 {{#if exposeTCP}}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: {{name}}
-  annotations: 
-    prometheus.io/scrape: 'true'
-    {{#each exposeTCP}}
-    prometheus.io/port: {{containerPort}}
-    {{/each}}
-    external-dns.alpha.kubernetes.io/hostname: {{host}}
   labels:
     category: {{category}}
     challenge: {{name}}
+  annotations: 
+    external-dns.alpha.kubernetes.io/hostname: {{host}}
 spec:
   type: LoadBalancer
   sessionAffinity: ClientIP
   selector:
     category: {{category}}
     challenge: {{name}}
+  annotations: 
+    external-dns.alpha.kubernetes.io/hostname: {{host}}
   ports:
     {{#each exposeTCP}}
     - port: {{containerPort}}
