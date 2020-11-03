@@ -83,16 +83,17 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: true
     kubernetes.io/ingress.class: "kong"
-    kubernetes.io/tls-acme: true
 spec:
   rules:
   - host: {{host}}
     http:
       paths:
+      {{#each exposeHttp}}
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{ServicePort}}
+          servicePort: {{containerPort}}
+      {{/each}}
   tls:
   - hosts:
     - '*.heltsikker.no'
