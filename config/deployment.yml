@@ -64,7 +64,7 @@ metadata:
     category: {{category}}
     challenge: {{name}}
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     category: {{category}}
     challenge: {{name}}
