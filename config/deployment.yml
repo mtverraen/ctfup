@@ -92,10 +92,6 @@ spec:
         backend:
           serviceName: {{name}}
           servicePort: {{servicePort}}
-  tls:
-  - hosts:
-    - '*.heltsikker.no'
-    secretName: ctf-heltsikker-tls
 {{/if}}
 
 {{#if exposeTCP}}
