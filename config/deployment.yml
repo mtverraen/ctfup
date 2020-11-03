@@ -64,7 +64,8 @@ metadata:
     category: {{category}}
     challenge: {{name}}
 spec:
-  type: LoadBalancer
+  type: NodePort
+  sessionAffinity: ClientIP
   selector:
     category: {{category}}
     challenge: {{name}}
@@ -74,34 +75,6 @@ spec:
       name: port-{{containerPort}}
       targetPort: {{containerPort}}
     {{/each}}
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: {{name}}-ingress
-  annotations:
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: true
-    kubernetes.io/ingress.class: "kong"
-    kong.kubernetes.io/ingress.allow-http: false 
-    kong.ingress.kubernetes.io/force-ssl-redirect: true 
-  labels:
-    category: {{category}}
-    challenge: {{name}}
-spec:
-  rules:
-  - host: {{host}}
-    http:
-      paths:
-      {{#each exposeHttp}}
-      - path: "/*"
-        backend:
-          serviceName: {{name}}
-          servicePort: {{containerPort}}
-      {{/each}}
-  tls:
-  - hosts:
-    - '*.heltsikker.no'
-    secretName: ctf-heltsikker-tls
 {{/if}}
 
 {{#if exposeTCP}}
@@ -112,7 +85,9 @@ metadata:
   name: {{name}}
   annotations: 
     prometheus.io/scrape: 'true'
-    prometheus.io/port: {{ServicePort}}
+    {{#each exposeTCP}}
+    prometheus.io/port: {{containerPort}}
+    {{/each}}
     external-dns.alpha.kubernetes.io/hostname: {{host}}
   labels:
     category: {{category}}
@@ -123,8 +98,6 @@ spec:
   selector:
     category: {{category}}
     challenge: {{name}}
-  annotations: 
-    external-dns.alpha.kubernetes.io/hostname: {{host}}
   ports:
     {{#each exposeTCP}}
     - port: {{containerPort}}
