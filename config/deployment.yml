@@ -88,10 +88,12 @@ spec:
   - host: {{host}}
     http:
       paths:
+      {{#each exposeHttp}} 
       - path: "/*"
         backend:
           serviceName: {{name}}
-          servicePort: {{servicePort}}
+          servicePort: {{containerPort}}
+      {{/each}}
 {{/if}}
 
 {{#if exposeTCP}}
