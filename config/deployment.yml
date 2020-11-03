@@ -81,6 +81,10 @@ metadata:
     category: {{category}}
     challenge: {{name}}
   annotations:
+    prometheus.io/scrape: 'true'
+    {{#each exposeTCP}}
+    prometheus.io/port: {{containerPort}}
+    {{/each}}
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: "kong"
 spec:
@@ -108,6 +112,10 @@ metadata:
     category: {{category}}
     challenge: {{name}}
   annotations: 
+    prometheus.io/scrape: 'true'
+    {{#each exposeTCP}}
+    prometheus.io/port: {{containerPort}}
+    {{/each}}
     external-dns.alpha.kubernetes.io/hostname: {{host}}
 spec:
   type: LoadBalancer
