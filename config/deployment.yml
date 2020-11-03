@@ -60,11 +60,12 @@ metadata:
     {{#each exposeHttp}}
     prometheus.io/port: {{containerPort}}
     {{/each}}
+    external-dns.alpha.kubernetes.io/hostname: {{host}}
   labels:
     category: {{category}}
     challenge: {{name}}
 spec:
-  type: NodePort
+  type: LoadBalancer
   sessionAffinity: ClientIP
   selector:
     category: {{category}}
