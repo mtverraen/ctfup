@@ -7,9 +7,6 @@ metadata:
     challenge: {{name}}
   annotations: 
     prometheus.io/scrape: 'true'
-    {{#each exposeHttp}}
-    prometheus.io/port: {{containerPort}}
-    {{/each}}
 spec:
   {{#if replicas }}
   replicas: {{replicas}}
