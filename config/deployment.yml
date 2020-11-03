@@ -48,36 +48,7 @@ spec:
         {{/if}}
       {{/each}}
     {{/if}}
-
-{{#if exposeHttp}}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{name}}
-  annotations: 
-    prometheus.io/scrape: 'true'
-    {{#each exposeHttp}}
-    prometheus.io/port: {{containerPort}}
-    {{/each}}
-    external-dns.alpha.kubernetes.io/hostname: {{host}}
-  labels:
-    category: {{category}}
-    challenge: {{name}}
-spec:
-  type: LoadBalancer
-  sessionAffinity: ClientIP
-  selector:
-    category: {{category}}
-    challenge: {{name}}
-  ports:
-    {{#each exposeHttp}}
-    - port: {{containerPort}}
-      name: port-{{containerPort}}
-      targetPort: {{containerPort}}
-    {{/each}}
-{{/if}}
-
+    
 {{#if exposeTCP}}
 ---
 apiVersion: v1
