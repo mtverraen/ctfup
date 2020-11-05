@@ -82,11 +82,13 @@ metadata:
     challenge: {{name}}
   annotations:
     prometheus.io/scrape: 'true'
-    {{#each exposeTCP}}
+    {{#each exposeHttp}}
     prometheus.io/port: {{containerPort}}
     {{/each}}
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: "kong"
+    kong.ingress.kubernetes.io/force-ssl-redirect: "true"
+    kong.kubernetes.io/ingress.allow-http: "false"
 spec:
   rules:
   - host: {{host}}
