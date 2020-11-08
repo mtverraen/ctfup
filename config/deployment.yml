@@ -60,6 +60,8 @@ metadata:
   labels:
     category: {{category}}
     challenge: {{name}}
+  annotations:
+    konghq.com/plugins: "ctfd-prometheus"
 spec:
   type: NodePort
   selector:
@@ -81,10 +83,7 @@ metadata:
     category: {{category}}
     challenge: {{name}}
   annotations:
-    prometheus.io/scrape: 'true'
-    {{#each exposeHttp}}
-    prometheus.io/port: {{containerPort}}
-    {{/each}}
+    konghq.com/plugins: "ctfd-prometheus"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     kubernetes.io/ingress.class: "kong"
     kong.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -114,10 +113,7 @@ metadata:
     category: {{category}}
     challenge: {{name}}
   annotations: 
-    prometheus.io/scrape: 'true'
-    {{#each exposeTCP}}
-    prometheus.io/port: {{containerPort}}
-    {{/each}}
+    konghq.com/plugins: "ctfd-prometheus"
     external-dns.alpha.kubernetes.io/hostname: {{host}}
 spec:
   type: LoadBalancer
@@ -125,8 +121,6 @@ spec:
   selector:
     category: {{category}}
     challenge: {{name}}
-  annotations: 
-    external-dns.alpha.kubernetes.io/hostname: {{host}}
   ports:
     {{#each exposeTCP}}
     - port: {{containerPort}}
