@@ -83,6 +83,7 @@ metadata:
     category: {{category}}
     challenge: {{name}}
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: {{host}}
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
 spec:
   ingressClassName: nginx
@@ -90,7 +91,7 @@ spec:
   - host: {{host}}
     http:
       paths:
-      - path: "/*"
+      - path: "/"
         backend:
           serviceName: {{name}}
           servicePort: {{servicePort}}
