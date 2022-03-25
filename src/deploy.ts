@@ -26,6 +26,7 @@ export class Deployer {
     }
 
     static async buildChallenge(challenge: Challenge) {
+        logger.debug(`${challenge.conf}`);
         if (!challenge.conf.containers) {
             return;
         }
